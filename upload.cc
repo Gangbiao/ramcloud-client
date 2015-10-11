@@ -22,41 +22,41 @@ int main(int argc, char **argv){
 	long retval, lSize; //lSize is the length of file in byte
 	char *fileName = argv[1];
 	char *tableName = argv[2];
-	
-    FILE *fp;
+
+	FILE *fp;
 	char *buffer;
-	
-    /*client here connect to the default service locator*/
-    char *serviceLocator = "tcp:host=10.22.91.246,port=11100";
-    char *clusterName = "main";
+
+	/*client here connect to the default service locator*/
+	char *serviceLocator = "tcp:host=10.22.91.246,port=11100";
+	char *clusterName = "main";
 	RamCloud client(serviceLocator, clusterName);
 
 	/*get table ID according the table name*/
 	uint64_t tableId, length;
-    client.createTable(tableName, 1);
+	client.createTable(tableName, 1);
 	tableId = client.getTableId(tableName);
-    //printf("%s\n%s\n", fileName, tableName);
+	//printf("%s\n%s\n", fileName, tableName);
 	/*open file */    
 	fp = fopen (fileName, "rb" );
 	if (fp==NULL) {
 		fputs ("Open file error\n",stderr); 
 		exit (1);
 	}
-	
-    /*obtain file size:*/
-    fseek (fp , 0 , SEEK_END);
+
+	/*obtain file size:*/
+	fseek (fp , 0 , SEEK_END);
 	lSize = ftell (fp);
 	rewind (fp);
 	// allocate memory to contain the whole file:
 	buffer = (char*) malloc (sizeof(char)*lSize);
 	if (buffer == NULL) {
-        fputs ("Allocate memory error\n",stderr); 
-        exit (2);
-    }
-	
-    /*copy the file into the buffer*/
+		fputs ("Allocate memory error\n",stderr); 
+		exit (2);
+	}
+
+	/*copy the file into the buffer*/
 	retval = fread (buffer,1,lSize,fp);
-    //printf("%ld\n%ld\n", retval, lSize);
+	//printf("%ld\n%ld\n", retval, lSize);
 	if (retval != lSize) {
 		fputs ("Reading file error\n",stderr); 
 		exit (3);
@@ -65,7 +65,7 @@ int main(int argc, char **argv){
 	fclose(fp);
 
 	/*upload the file to ramcloud*/
-    tableId = client.getTableId(tableName);
+	tableId = client.getTableId(tableName);
 	client.write(tableId, fileName, strlen(fileName), buffer, lSize);
 	free(buffer);
 
