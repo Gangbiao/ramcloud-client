@@ -34,7 +34,7 @@ int main(int argc, char **argv){
 	/*get table ID according the table name*/
 	uint64_t tableId, length;
 	client.createTable(tableName, 1);
-	tableId = client.getTableId(tableName);
+	//tableId = client.getTableId(tableName);
 	//printf("%s\n%s\n", fileName, tableName);
 	/*open file */    
 	fp = fopen (fileName, "rb" );
