@@ -32,22 +32,29 @@ int main(int argc, char **argv){
 	char *serviceLocator = "tcp:host=10.22.91.246,port=11100";
 	char *clusterName = "main";
 	RamCloud client(serviceLocator, clusterName);
-
+	
 	/*get table ID according the table name*/
-	uint64_t tableId, length;
+	//uint64_t tableId, length;
+	long tableId;
 	Buffer value;
+printf("fileName is %s\ntableName is %s\n",fileName, tableName);
+	tableId = client.getTableId(tableName);
+printf("table ID is %ld\n",tableId);
     	client.read(tableId, fileName, strlen(fileName), &value);
         
 	/*open an create file to write*/	
-	fp = fopen (fileName, "wb");
+	fp = fopen ("data2_down", "wb");
 	if (fp==NULL) {
 		fputs ("Open file error\n",stderr); 
 		exit (1);
 	}
 
+	/*write the buffer to the file*/
 	value.write(0, value.size(), fp);
+	printf("write file done\n");
 
 	//client.createTable(tableName, 1);
 	//tableId = client.getTableId(tableName);
+	return 0;
 }
 
