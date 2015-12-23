@@ -2,7 +2,7 @@
 	> File Name: upload.cc
 	> Author: Gangbiao Liu 
 	> Mail: lgb.nwpu@gmail.com
-	> Created Time: Sat 10 Oct 2015 01:20:30 PM EDT
+	> Created Time: Sat 10 Oct 2015 01:20:30 AM CST
  ************************************************************************/
 
 #include<stdio.h>
